@@ -1,9 +1,10 @@
 package cscd212tests.lab2;
 
 import cscd212classes.lab2.Television;
+import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 

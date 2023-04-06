@@ -1,8 +1,7 @@
 package cscd212classes.lab2;
-
 import java.util.Objects;
 
-public class Television {
+public class Television implements Comparable<Television>{
     private final boolean fourK;
     private final String make;
     private final String model;
@@ -10,9 +9,23 @@ public class Television {
     private final int screenSize;
     private final boolean smart;
 
-    public Television(String make, String model, int resolution, int screenSize, boolean smart) {
+    public Television(String make, String model, boolean smart,int screenSize ,int resolution) {
         if(make == null || make.isBlank() || model == null || model.isBlank() || screenSize < 32 || resolution < 720)
             throw new IllegalArgumentException("Check parameters");
+        if(resolution >= 2160)
+            this.fourK = true;
+        else
+            this.fourK = false;
+        this.make = make;
+        this.model = model;
+        this.resolution = resolution;
+        this.screenSize = screenSize;
+        this.smart = smart;
+    }
+
+    public Television(String model, boolean smart, int screenSize, int resolution, String make){
+        if(make == null || make.isBlank() || model == null || model.isBlank() || screenSize < 32 || resolution < 720)
+                throw new IllegalArgumentException("Check parameters");
         if(resolution >= 2160)
             this.fourK = true;
         else
@@ -41,6 +54,21 @@ public class Television {
     }
 
     @Override
+    public int compareTo(Television another){
+        if(another == null)
+            throw new IllegalArgumentException("Null object");
+
+        if(this.make == another.make && this.model == another.model && this.screenSize == another.screenSize)
+            return 0;
+        else
+            return -1;
+    }
+
+
+
+
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null) return false;
@@ -55,13 +83,14 @@ public class Television {
 
     @Override
     public String toString() {
-        return "Television{" +
-                "fourK=" + fourK +
-                ", make='" + make + '\'' +
-                ", model='" + model + '\'' +
-                ", resolution=" + resolution +
-                ", screenSize=" + screenSize +
-                ", smart=" + smart +
-                '}';
+        if(smart && fourK)
+            return make+"-"+model+", "+screenSize+" inch smart tv with 4K resolution";
+        else
+            return make+"-"+model+", "+screenSize+" inch tv with "+resolution+" resolution";
     }
+
+
+
+
+
 }

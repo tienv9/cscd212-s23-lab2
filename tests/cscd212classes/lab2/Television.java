@@ -11,7 +11,7 @@ public class Television implements Comparable<Television>{
 
     public Television(String make, String model, boolean smart,int screenSize ,int resolution) {
         if(make == null || make.isBlank() || model == null || model.isBlank() || screenSize < 32 || resolution < 720)
-            throw new IllegalArgumentException("Check parameters");
+            throw new IllegalArgumentException("Invalid parameter in constructor");
         if(resolution >= 2160)
             this.fourK = true;
         else
@@ -25,7 +25,7 @@ public class Television implements Comparable<Television>{
 
     public Television(String model, boolean smart, int screenSize, int resolution, String make){
         if(make == null || make.isBlank() || model == null || model.isBlank() || screenSize < 32 || resolution < 720)
-                throw new IllegalArgumentException("Check parameters");
+                throw new IllegalArgumentException("Invalid parameter in constructor");
         if(resolution >= 2160)
             this.fourK = true;
         else
@@ -56,17 +56,18 @@ public class Television implements Comparable<Television>{
     @Override
     public int compareTo(Television another){
         if(another == null)
-            throw new IllegalArgumentException("Null object");
-
-        if(this.make == another.make && this.model == another.model && this.screenSize == another.screenSize)
-            return 0;
+            throw new IllegalArgumentException("null parameter in the compareTo method");
+        if(this.make.compareTo(another.make) == 0)
+            if(this.model.compareTo(another.model) == 0)
+                if(this.screenSize == another.screenSize)
+                    return 0;
+                else
+                    return this.screenSize - another.screenSize;
+            else
+                return this.model.compareTo(another.model);
         else
-            return -1;
+            return this.make.compareTo(another.make);
     }
-
-
-
-
 
     @Override
     public boolean equals(Object o) {
@@ -78,13 +79,17 @@ public class Television implements Comparable<Television>{
 
     @Override
     public int hashCode() {
-        return Objects.hash(fourK, make, model, resolution, screenSize, smart);
+        return Objects.hash(fourK) + Objects.hash(make) + Objects.hash(model) + Objects.hash(resolution) + Objects.hash(screenSize) + Objects.hash(smart);
     }
 
     @Override
     public String toString() {
         if(smart && fourK)
             return make+"-"+model+", "+screenSize+" inch smart tv with 4K resolution";
+        else if(smart)
+            return make+"-"+model+", "+screenSize+" inch smart tv with "+resolution+" resolution";
+        else if(fourK)
+            return make+"-"+model+", "+screenSize+" inch tv with 4K resolution";
         else
             return make+"-"+model+", "+screenSize+" inch tv with "+resolution+" resolution";
     }

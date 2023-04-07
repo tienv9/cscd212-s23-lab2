@@ -6,7 +6,7 @@ import java.util.Comparator;
 
 public class TelevisionResolutionMakeDescendingComparator implements Comparator<Television> {
     @Override
-    public int compare(Television o1, Television o2) {
+    public int compare(final Television o1, final Television o2) {
         if(o1 == null || o2 == null)
             throw new IllegalArgumentException("null parameter in TelevisionResolutionMakeDescendingComparator");
 
